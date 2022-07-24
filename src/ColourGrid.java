@@ -12,16 +12,16 @@ public class ColourGrid {
         HashMap<String, Integer> countMap = selectLargestConnectingBlock(grids, rows, columns);
         Grid[][] selectedBlock = new Grid[rows][columns];
         markRange(countMap.get("XPosition"), countMap.get("YPosition"), countMap.get("maxCount"), countMap.get("maxColour"), selectedBlock, grids, rows, columns);
-        printSelectedBlock(selectedBlock,rows,columns);
+        printSelectedBlock(selectedBlock, rows, columns);
     }
 
-    private static void printSelectedBlock(Grid[][] selectedBlock,int rows, int columns) {
+    private static void printSelectedBlock(Grid[][] selectedBlock, int rows, int columns) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (selectedBlock[i][j].getColour()==0){
+                if (selectedBlock[i][j].getColour() == 0) {
                     System.out.print("*\t");
-                }else {
-                    System.out.print(selectedBlock[i][j].getColour()+"\t");
+                } else {
+                    System.out.print(selectedBlock[i][j].getColour() + "\t");
                 }
             }
             System.out.println("");
@@ -62,8 +62,8 @@ public class ColourGrid {
         int maxColour = 0;
         int[][] counts = new int[rows][columns];
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
+        for (int i = 0; i < rows - 1; i++) {
+            for (int j = 0; j < columns - 1; j++) {
 
                 if (checkInside(i, j + 1, rows, columns) && grids[i][j].getColour() == grids[i][j + 1].getColour()) {
                     counts[i][j] += counts[i + 1][j] + 1;
