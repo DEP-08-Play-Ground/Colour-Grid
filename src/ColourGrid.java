@@ -10,12 +10,33 @@ public class ColourGrid {
 
         Grid[][] grids = createGrid(rows, columns, numOfColours);
         HashMap<String, Integer> countMap = selectLargestConnectingBlock(grids, rows, columns);
-        markRange(countMap.get("XPosition"),countMap.get("YPosition"),countMap.get("maxCount"),rows,columns);
-
-
+        Grid[][] selectedBlock = new Grid[rows][columns];
+        markRange(countMap.get("XPosition"), countMap.get("YPosition"), countMap.get("maxCount"), countMap.get("maxColour"), selectedBlock, grids, rows, columns);
     }
 
-    private static void markRange(Integer xPosition, Integer yPosition, Integer maxCount, int rows, int columns) {
+    private static void markRange(Integer xPosition, Integer yPosition, Integer maxCount, Integer maxColour, Grid[][] selectedBlock, Grid[][] givenBlock, int rows, int columns) {
+
+        selectedBlock[xPosition][yPosition].setColour(maxColour);
+
+        if (checkInside(xPosition + 1, yPosition, rows, columns) && selectedBlock[xPosition + 1][yPosition].getColour() == 0 &&
+                givenBlock[xPosition][yPosition].getColour() == givenBlock[xPosition + 1][yPosition].getColour()) {
+            markRange(xPosition + 1, yPosition, maxCount, maxColour, selectedBlock, givenBlock, rows, columns);
+        }
+
+        if (checkInside(xPosition, yPosition - 1, rows, columns) && selectedBlock[xPosition][yPosition - 1].getColour() == 0 &&
+                givenBlock[xPosition][yPosition].getColour() == givenBlock[xPosition][yPosition - 1].getColour()) {
+            markRange(xPosition, yPosition - 1, maxCount, maxColour, selectedBlock, givenBlock, rows, columns);
+        }
+
+        if (checkInside(xPosition - 1, yPosition, rows, columns) && selectedBlock[xPosition - 1][yPosition].getColour() == 0 &&
+                givenBlock[xPosition][yPosition].getColour() == givenBlock[xPosition - 1][yPosition].getColour()) {
+            markRange(xPosition - 1, yPosition, maxCount, maxColour, selectedBlock, givenBlock, rows, columns);
+        }
+
+        if (checkInside(xPosition, yPosition + 1, rows, columns) && selectedBlock[xPosition][yPosition + 1].getColour() == 0 &&
+                givenBlock[xPosition][yPosition].getColour() == givenBlock[xPosition][yPosition + 1].getColour()) {
+            markRange(xPosition, yPosition + 1, maxCount, maxColour, selectedBlock, givenBlock, rows, columns);
+        }
 
     }
 
@@ -23,6 +44,7 @@ public class ColourGrid {
         int maxX = 0;
         int maxY = 0;
         int maxCount = 0;
+        int maxColour = 0;
         int[][] counts = new int[rows][columns];
 
         for (int i = 0; i < rows; i++) {
@@ -48,6 +70,7 @@ public class ColourGrid {
                     maxCount = counts[i][j];
                     maxX = i;
                     maxY = j;
+                    maxColour = grids[i][j].getColour();
                 }
 
             }
@@ -57,6 +80,7 @@ public class ColourGrid {
         countMap.put("XPosition", maxX);
         countMap.put("YPosition", maxY);
         countMap.put("maxCount", maxCount);
+        countMap.put("maxColour", maxColour);
 
         return countMap;
 
