@@ -8,12 +8,16 @@ public class ColourGrid {
         int numOfColours = 4;
 
         Grid[][] grids = createGrid(rows, columns, numOfColours);
+        System.out.println("======== Created Grid ========\n");
+        printSelectedBlock(grids, rows, columns);
         HashMap<String, Integer> countMap = selectLargestConnectingBlock(grids, rows, columns);
         Grid[][] selectedBlock = createGrid(rows, columns);
         markRange(countMap.get("XPosition"), countMap.get("YPosition"), countMap.get("maxCount"), countMap.get("maxColour"), selectedBlock, grids, rows, columns);
+        System.out.println("\n======== Largest Connecting Block ========\n");
         printSelectedBlock(selectedBlock, rows, columns);
     }
 
+    //print the selected blocks in the grid
     private static void printSelectedBlock(Grid[][] selectedBlock, int rows, int columns) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -27,6 +31,7 @@ public class ColourGrid {
         }
     }
 
+    //mark each and every block which are adjacent to the max-count-block with the max-colour
     private static void markRange(Integer xPosition, Integer yPosition, Integer maxCount, Integer maxColour, Grid[][] selectedBlock, Grid[][] givenBlock, int rows, int columns) {
 
         selectedBlock[xPosition][yPosition].setColour(maxColour);
@@ -60,6 +65,7 @@ public class ColourGrid {
         int maxColour = 0;
         int[][] counts = new int[rows][columns];
 
+        //check the right,left, up and down of a particular block for adjacent blocks
         for (int i = 0; i < rows - 1; i++) {
             for (int j = 0; j < columns - 1; j++) {
 
@@ -88,7 +94,7 @@ public class ColourGrid {
 
             }
         }
-
+        //fetch the data of the block with maximum adjacent blocks to a hashmap
         HashMap<String, Integer> countMap = new HashMap<>();
         countMap.put("XPosition", maxX);
         countMap.put("YPosition", maxY);
@@ -100,10 +106,12 @@ public class ColourGrid {
     }
 
 
+    //see whether the particular index is inside the grid we created
     private static boolean checkInside(int i, int j, int rows, int columns) {
         return (i < rows && j < columns && -1 < i && -1 < j);
     }
 
+    //create the 2D grids array with random colours
     private static Grid[][] createGrid(int rows, int columns, int numOfColours) {
         Random random = new Random();
         Grid[][] grids = new Grid[rows][columns];
@@ -117,6 +125,8 @@ public class ColourGrid {
         }
         return grids;
     }
+
+    //create the 2D grids array with colour - 0
     private static Grid[][] createGrid(int rows, int columns) {
         Grid[][] grids = new Grid[rows][columns];
         for (int i = 0; i < rows; i++) {
