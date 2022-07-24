@@ -10,7 +10,7 @@ public class ColourGrid {
 
         Grid[][] grids = createGrid(rows, columns, numOfColours);
         HashMap<String, Integer> countMap = selectLargestConnectingBlock(grids, rows, columns);
-        Grid[][] selectedBlock = new Grid[rows][columns];
+        Grid[][] selectedBlock = createGrid(rows, columns);
         markRange(countMap.get("XPosition"), countMap.get("YPosition"), countMap.get("maxCount"), countMap.get("maxColour"), selectedBlock, grids, rows, columns);
         printSelectedBlock(selectedBlock, rows, columns);
     }
@@ -119,4 +119,18 @@ public class ColourGrid {
         }
         return grids;
     }
+    private static Grid[][] createGrid(int rows, int columns) {
+        Grid[][] grids = new Grid[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                grids[i][j] = new Grid();
+                grids[i][j].setColour(0);
+                grids[i][j].setX(i);
+                grids[i][j].setY(j);
+            }
+        }
+        return grids;
+    }
+
+
 }
