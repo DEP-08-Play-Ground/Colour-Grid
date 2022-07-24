@@ -11,7 +11,7 @@ public class ColourGrid {
         System.out.println("======== Created Grid ========\n");
         printSelectedBlock(grids, rows, columns);
         HashMap<String, Integer> countMap = selectLargestConnectingBlock(grids, rows, columns);
-        Grid[][] selectedBlock = createGrid(rows, columns);
+        Grid[][] selectedBlock = createGrid(rows, columns,0);
         markRange(countMap.get("XPosition"), countMap.get("YPosition"), countMap.get("maxCount"), countMap.get("maxColour"), selectedBlock, grids, rows, columns);
         System.out.println("\n======== Largest Connecting Block ========\n");
         printSelectedBlock(selectedBlock, rows, columns);
@@ -118,27 +118,16 @@ public class ColourGrid {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 grids[i][j] = new Grid();
-                grids[i][j].setColour(random.nextInt(numOfColours - 1) + 1);
+                if (numOfColours==0){
+                    grids[i][j].setColour(0);
+                }else {
+                    grids[i][j].setColour(random.nextInt(numOfColours - 1) + 1);
+                }
                 grids[i][j].setX(i);
                 grids[i][j].setY(j);
             }
         }
         return grids;
     }
-
-    //create the 2D grids array with colour - 0
-    private static Grid[][] createGrid(int rows, int columns) {
-        Grid[][] grids = new Grid[rows][columns];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                grids[i][j] = new Grid();
-                grids[i][j].setColour(0);
-                grids[i][j].setX(i);
-                grids[i][j].setY(j);
-            }
-        }
-        return grids;
-    }
-
 
 }
