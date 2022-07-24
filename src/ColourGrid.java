@@ -1,7 +1,6 @@
 import java.util.HashMap;
 import java.util.Random;
 
-
 public class ColourGrid {
     public static void main(String[] args) {
         int rows = 15;
@@ -53,7 +52,6 @@ public class ColourGrid {
         }
 
     }
-
 
     private static HashMap<String, Integer> selectLargestConnectingBlock(Grid[][] grids, int rows, int columns) {
         int maxX = 0;
