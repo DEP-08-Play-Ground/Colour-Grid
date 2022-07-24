@@ -21,19 +21,19 @@ public class ColourGrid {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
 
-                if (checkInside(i, j + 1) && grids[i][j].getColour() == grids[i][j + 1].getColour()) {
+                if (checkInside(i, j + 1, rows, columns) && grids[i][j].getColour() == grids[i][j + 1].getColour()) {
                     counts[i][j] += counts[i + 1][j] + 1;
                 }
 
-                if (checkInside(i, j - 1) && grids[i][j].getColour() == grids[i][j - 1].getColour()) {
+                if (checkInside(i, j - 1, rows, columns) && grids[i][j].getColour() == grids[i][j - 1].getColour()) {
                     counts[i][j] += counts[i + 1][j] + 1;
                 }
 
-                if (checkInside(i + 1, j) && grids[i][j].getColour() == grids[i + 1][j].getColour()) {
+                if (checkInside(i + 1, j, rows, columns) && grids[i][j].getColour() == grids[i + 1][j].getColour()) {
                     counts[i][j] += counts[i + 1][j] + 1;
                 }
 
-                if (checkInside(i - 1, j) && grids[i][j].getColour() == grids[i - 1][j].getColour()) {
+                if (checkInside(i - 1, j, rows, columns) && grids[i][j].getColour() == grids[i - 1][j].getColour()) {
                     counts[i][j] += counts[i - 1][j] + 1;
                 }
 
@@ -42,8 +42,8 @@ public class ColourGrid {
 
     }
 
-    private static boolean checkInside(int i, int j) {
-        return false;
+    private static boolean checkInside(int i, int j, int rows, int columns) {
+        return (i < rows && j < columns && -1 < i && -1 < j);
     }
 
     private static Grid[][] createGrid(int rows, int columns, int numOfColours) {
