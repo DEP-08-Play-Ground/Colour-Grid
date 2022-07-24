@@ -7,18 +7,18 @@ public class ColourGrid {
         int columns = 10;
         int numOfColours = 4;
 
-        Grid[][] grids = createGrid(rows, columns, numOfColours);
-        System.out.println("======== Created Grid ========\n");
-        printSelectedBlock(grids, rows, columns);
-        HashMap<String, Integer> countMap = selectLargestConnectingBlock(grids, rows, columns);
-        Grid[][] selectedBlock = createGrid(rows, columns,0);
-        markRange(countMap.get("XPosition"), countMap.get("YPosition"), countMap.get("maxCount"), countMap.get("maxColour"), selectedBlock, grids, rows, columns);
+        Block[][] blocks = createGrid(rows, columns, numOfColours);
+        System.out.println("======== Created Block ========\n");
+        printSelectedBlock(blocks, rows, columns);
+        HashMap<String, Integer> countMap = selectLargestConnectingBlock(blocks, rows, columns);
+        Block[][] selectedBlock = createGrid(rows, columns,0);
+        markRange(countMap.get("XPosition"), countMap.get("YPosition"), countMap.get("maxCount"), countMap.get("maxColour"), selectedBlock, blocks, rows, columns);
         System.out.println("\n======== Largest Connecting Block ========\n");
         printSelectedBlock(selectedBlock, rows, columns);
     }
 
     //print the selected blocks in the grid
-    private static void printSelectedBlock(Grid[][] selectedBlock, int rows, int columns) {
+    private static void printSelectedBlock(Block[][] selectedBlock, int rows, int columns) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (selectedBlock[i][j].getColour() == 0) {
@@ -32,7 +32,7 @@ public class ColourGrid {
     }
 
     //mark each and every block which are adjacent to the max-count-block with the max-colour
-    private static void markRange(Integer xPosition, Integer yPosition, Integer maxCount, Integer maxColour, Grid[][] selectedBlock, Grid[][] givenBlock, int rows, int columns) {
+    private static void markRange(Integer xPosition, Integer yPosition, Integer maxCount, Integer maxColour, Block[][] selectedBlock, Block[][] givenBlock, int rows, int columns) {
 
         selectedBlock[xPosition][yPosition].setColour(maxColour);
 
@@ -58,7 +58,7 @@ public class ColourGrid {
 
     }
 
-    private static HashMap<String, Integer> selectLargestConnectingBlock(Grid[][] grids, int rows, int columns) {
+    private static HashMap<String, Integer> selectLargestConnectingBlock(Block[][] blocks, int rows, int columns) {
         int maxX = 0;
         int maxY = 0;
         int maxCount = 0;
@@ -69,19 +69,19 @@ public class ColourGrid {
         for (int i = 0; i < rows - 1; i++) {
             for (int j = 0; j < columns - 1; j++) {
 
-                if (checkInside(i, j + 1, rows, columns) && grids[i][j].getColour() == grids[i][j + 1].getColour()) {
+                if (checkInside(i, j + 1, rows, columns) && blocks[i][j].getColour() == blocks[i][j + 1].getColour()) {
                     counts[i][j] += counts[i + 1][j] + 1;
                 }
 
-                if (checkInside(i, j - 1, rows, columns) && grids[i][j].getColour() == grids[i][j - 1].getColour()) {
+                if (checkInside(i, j - 1, rows, columns) && blocks[i][j].getColour() == blocks[i][j - 1].getColour()) {
                     counts[i][j] += counts[i + 1][j] + 1;
                 }
 
-                if (checkInside(i + 1, j, rows, columns) && grids[i][j].getColour() == grids[i + 1][j].getColour()) {
+                if (checkInside(i + 1, j, rows, columns) && blocks[i][j].getColour() == blocks[i + 1][j].getColour()) {
                     counts[i][j] += counts[i + 1][j] + 1;
                 }
 
-                if (checkInside(i - 1, j, rows, columns) && grids[i][j].getColour() == grids[i - 1][j].getColour()) {
+                if (checkInside(i - 1, j, rows, columns) && blocks[i][j].getColour() == blocks[i - 1][j].getColour()) {
                     counts[i][j] += counts[i - 1][j] + 1;
                 }
 
@@ -89,7 +89,7 @@ public class ColourGrid {
                     maxCount = counts[i][j];
                     maxX = i;
                     maxY = j;
-                    maxColour = grids[i][j].getColour();
+                    maxColour = blocks[i][j].getColour();
                 }
 
             }
@@ -112,22 +112,22 @@ public class ColourGrid {
     }
 
     //create the 2D grids array with random colours
-    private static Grid[][] createGrid(int rows, int columns, int numOfColours) {
+    private static Block[][] createGrid(int rows, int columns, int numOfColours) {
         Random random = new Random();
-        Grid[][] grids = new Grid[rows][columns];
+        Block[][] blocks = new Block[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                grids[i][j] = new Grid();
+                blocks[i][j] = new Block();
                 if (numOfColours==0){
-                    grids[i][j].setColour(0);
+                    blocks[i][j].setColour(0);
                 }else {
-                    grids[i][j].setColour(random.nextInt(numOfColours - 1) + 1);
+                    blocks[i][j].setColour(random.nextInt(numOfColours - 1) + 1);
                 }
-                grids[i][j].setX(i);
-                grids[i][j].setY(j);
+                blocks[i][j].setX(i);
+                blocks[i][j].setY(j);
             }
         }
-        return grids;
+        return blocks;
     }
 
 }

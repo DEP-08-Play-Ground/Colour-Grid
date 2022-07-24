@@ -1,12 +1,12 @@
-class Grid {
+class Block {
     private int colour;
     private int x;
     private int y;
 
-    public Grid() {
+    public Block() {
     }
 
-    public Grid(int colour, int x, int y) {
+    public Block(int colour, int x, int y) {
         this.colour = colour;
         this.x = x;
         this.y = y;
@@ -38,7 +38,7 @@ class Grid {
 
     @Override
     public String toString() {
-        return "Grid{" +
+        return "Block{" +
                 "colour=" + colour +
                 ", x=" + x +
                 ", y=" + y +
