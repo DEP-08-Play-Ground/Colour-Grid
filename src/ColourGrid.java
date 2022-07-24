@@ -12,6 +12,20 @@ public class ColourGrid {
         HashMap<String, Integer> countMap = selectLargestConnectingBlock(grids, rows, columns);
         Grid[][] selectedBlock = new Grid[rows][columns];
         markRange(countMap.get("XPosition"), countMap.get("YPosition"), countMap.get("maxCount"), countMap.get("maxColour"), selectedBlock, grids, rows, columns);
+        printSelectedBlock(selectedBlock,rows,columns);
+    }
+
+    private static void printSelectedBlock(Grid[][] selectedBlock,int rows, int columns) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (selectedBlock[i][j].getColour()==0){
+                    System.out.print("*\t");
+                }else {
+                    System.out.print(selectedBlock[i][j].getColour()+"\t");
+                }
+            }
+            System.out.println("");
+        }
     }
 
     private static void markRange(Integer xPosition, Integer yPosition, Integer maxCount, Integer maxColour, Grid[][] selectedBlock, Grid[][] givenBlock, int rows, int columns) {
@@ -39,6 +53,7 @@ public class ColourGrid {
         }
 
     }
+
 
     private static HashMap<String, Integer> selectLargestConnectingBlock(Grid[][] grids, int rows, int columns) {
         int maxX = 0;
